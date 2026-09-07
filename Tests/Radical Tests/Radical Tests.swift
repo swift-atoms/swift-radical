@@ -1,8 +1,8 @@
 import Radical
 import Testing
 
-@Suite struct RadicalTests {
-    @Test func exactAndIrrationalRootsRemainDistinct() throws {
+@Suite struct `Radicals distinguish exact roots from approximations` {
+    @Test func `Exact and irrational roots remain distinct`() throws {
         let root = try Radical(radicand: 2, degree: 2)
         #expect(root.rational == nil)
         #expect(try root.multiplied(by: root).rational == 2)
