@@ -1,2 +1,2 @@
 @_exported public import Radical
-public import Foundation
+import Foundation
