@@ -43,7 +43,9 @@ public struct Radical: Hashable, Sendable {
         self.degree = degree
         self.isNegative = value != .zero && negative
     }
+}
 
+extension Radical {
     public var rational: Rational? {
         guard degree == 1 else { return nil }
         return isNegative ? -radicand : radicand

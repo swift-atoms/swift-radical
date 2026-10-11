@@ -13,14 +13,14 @@ let package = Package(
     dependencies: [.package(url: "https://github.com/swift-atoms/swift-rational.git", branch: "main")],
     targets: [
         .target(name: "Radical", dependencies: [.product(name: "Rational", package: "swift-rational")], path: "Sources/Radical"),
-        .target(name: "Radical Foundation Integration", dependencies: ["Radical"], path: "Sources/Radical Foundation Integration"),
-        .target(name: "Radical Test Support", dependencies: ["Radical"], path: "Tests/Support"),
-        .testTarget(name: "Radical Tests", dependencies: ["Radical", "Radical Foundation Integration", "Radical Test Support"], path: "Tests/Radical Tests"),
+        .target(name: "Radical Foundation Integration", dependencies: [.target(name: "Radical")], path: "Sources/Radical Foundation Integration"),
+        .target(name: "Radical Test Support", dependencies: [.target(name: "Radical")], path: "Tests/Support"),
+        .testTarget(name: "Radical Tests", dependencies: [.target(name: "Radical"), .target(name: "Radical Test Support")], path: "Tests/Radical Tests"),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     target.swiftSettings = (target.swiftSettings ?? []) + [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
