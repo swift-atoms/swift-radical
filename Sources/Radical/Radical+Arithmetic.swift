@@ -3,13 +3,15 @@ public import Rational
 extension Radical {
     public func raised(to exponent: Rational) throws(Rational.Error) -> Self {
         guard let numerator = exponent.numerator.absolute.exactly(Int.self),
-            let denominator = exponent.denominator.exactly(Int.self) else { throw .overflow }
+            let denominator = exponent.denominator.exactly(Int.self)
+        else { throw .overflow }
         guard !isNegative || denominator % 2 == 1 else { throw .unrepresentable }
         let degree = degree.multipliedReportingOverflow(by: denominator)
         guard !degree.overflow else { throw .overflow }
         let power = exponent < .zero ? -numerator : numerator
         return Self(
-            positive: try radicand.raised(to: power), degree: degree.partialValue,
+            positive: try radicand.raised(to: power),
+            degree: degree.partialValue,
             negative: isNegative && numerator % 2 != 0
         )
     }
@@ -29,7 +31,8 @@ extension Radical {
         let absolute = value < .zero ? -value : value
         do {
             return Self(
-                positive: try radicand * absolute.raised(to: degree), degree: degree,
+                positive: try radicand * absolute.raised(to: degree),
+                degree: degree,
                 negative: isNegative != (value < .zero)
             )
         } catch { preconditionFailure("A nonnegative integer power is defined") }

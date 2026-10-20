@@ -27,7 +27,8 @@ public struct Radical: Hashable, Sendable {
             if remaining % prime == 0 {
                 while remaining % prime == 0 { remaining /= prime }
                 while degree % prime == 0,
-                    let root = value.root(prime) {
+                    let root = value.root(prime)
+                {
                     value = root
                     degree /= prime
                 }
@@ -35,7 +36,8 @@ public struct Radical: Hashable, Sendable {
             prime += 1
         }
         if remaining > 1, remaining <= limit,
-            let root = value.root(remaining) {
+            let root = value.root(remaining)
+        {
             value = root
             degree /= remaining
         }
